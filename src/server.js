@@ -8,7 +8,8 @@ const setupServer = () => {
     res.status(200).json({ text: "hello world" });
   });
 
-  app.get("/tasks", tasksController.index);
+  app.get("/tasks", tasksController.get);
+  app.post("/tasks", tasksController.post);
   return app;
 };
 
