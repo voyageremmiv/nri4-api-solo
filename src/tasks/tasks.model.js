@@ -49,4 +49,8 @@ module.exports = {
       .update({ title: task.title })
       .then(() => id);
   },
+
+  delete(id) {
+    return knex.from(TASKS_TABLE).where({ id: id }).del()
+  }
 };

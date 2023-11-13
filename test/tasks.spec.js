@@ -86,4 +86,26 @@ describe("tasks", () => {
       });
     });
   });
+
+  describe("create", () => {
+    const deleteId = 6666;
+
+    before(async () => {
+      await knex(TASKS_TABLE)
+        .insert({ id: 6666, title: "DeleteTask" })
+        .catch(console.error);
+      console.log("Add test task");
+    });
+
+    describe("with valid properties", () => {
+      it("should be able to delete a exist task", async () => {
+        const id = await tasksModel.delete(deleteId);
+        const task = await knex(TASKS_TABLE)
+          .select()
+          .where("id", deleteId)
+          .first();
+        expect(task).to.not.exist;
+      });
+    });
+  });
 });
