@@ -10,7 +10,6 @@ describe("tasks", () => {
     it("should return an array of tasks", async () => {
       const tasks = await tasksModel.getAll();
       expect(tasks).to.be.an.instanceof(Array);
-      console.log(tasks);
       expect(tasks.length).to.eq(3);
     });
   });

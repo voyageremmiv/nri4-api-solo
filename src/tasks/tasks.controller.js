@@ -10,4 +10,9 @@ module.exports = {
     const id = await tasksModel.create(req.body);
     res.sendStatus(200);
   },
+
+  async patch(req, res) {
+    const id = await tasksModel.update(req.body.id, req.body);
+    res.sendStatus(200);
+  },
 };

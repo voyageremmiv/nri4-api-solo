@@ -44,7 +44,6 @@ module.exports = {
    */
   update(id, task) {
     validateProps(task);
-    // YOUR CODE HERE
     return knex(TASKS_TABLE)
       .where({ id: id })
       .update({ title: task.title })
