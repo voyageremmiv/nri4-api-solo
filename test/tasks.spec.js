@@ -15,6 +15,24 @@ describe("tasks", () => {
     });
   });
 
+  describe("getById", () => {
+    describe("when task exists", () => {
+      const existId = 1;
+      it("should get task by id", async () => {
+        const task = await tasksModel.getById(existId);
+        expect(task).to.exist;
+        expect(task.id).to.eq(existId);
+      });
+    });
+
+    describe("when task doesn't exist", () => {
+      it("should return undefined", async () => {
+        const task = await tasksModel.getById(7777);
+        expect(task).to.be.undefined;
+      });
+    });
+  });
+
   describe("create", () => {
     const newId = 9999;
 
@@ -36,6 +54,36 @@ describe("tasks", () => {
           .first();
         expect(task).to.exist;
         expect(task.id).to.eq(newId);
+      });
+    });
+  });
+
+  describe("update", () => {
+    describe("with valid parameters", () => {
+      const updateId = 3;
+      after(async () => {
+        await knex(TASKS_TABLE)
+          .update({
+            title: "資源ごみを出す",
+          })
+          .where("id", updateId)
+          .returning("id")
+          .then(() => {
+            console.log("updated test task");
+          })
+          .catch(console.error);
+      });
+
+      it("should return the id", async () => {
+        const id = await tasksModel.update(updateId, {
+          title: "UpdateTitle",
+        });
+        expect(id).to.eq(updateId);
+      });
+
+      it("should update the task", async () => {
+        const task = await tasksModel.getById(updateId);
+        expect(task.title).to.eq("UpdateTitle");
       });
     });
   });
