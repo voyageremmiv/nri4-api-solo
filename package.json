@@ -4,12 +4,24 @@
   "description": "API ソロプロジェクト",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run"
   },
   "keywords": [],
-  "author": "",
+  "author": "voyageremmiv",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "knex": "^3.0.1",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.3"
   }
 }
