@@ -11,6 +11,7 @@ const setupServer = () => {
   app.get("/tasks", tasksController.get);
   app.post("/tasks", tasksController.post);
   app.patch("/tasks", tasksController.patch);
+  app.delete("/tasks", tasksController.delete);
   return app;
 };
 

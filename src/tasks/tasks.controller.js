@@ -15,4 +15,9 @@ module.exports = {
     const id = await tasksModel.update(req.body.id, req.body);
     res.sendStatus(200);
   },
+
+  async delete(req, res) {
+    const id = await tasksModel.delete(req.body.id);
+    res.sendStatus(200);
+  },
 };
