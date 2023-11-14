@@ -1,6 +1,7 @@
 const setupServer = () => {
   const express = require("express");
   const tasksController = require("./tasks/tasks.controller");
+  const booksController = require("./books/books.controller");
   const app = express();
   app.use(express.json());
 
@@ -17,6 +18,14 @@ const setupServer = () => {
   });
 
   app.options("/tasks/:id", (req, res) => {
+    res.set({ "Access-Control-Allow-Origin": "*" });
+    res.set({ "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE" });
+    res.set({ "Access-Control-Allow-Headers": "Content-Type" });
+
+    res.sendStatus(200);
+  });
+
+  app.options("/books", (req, res) => {
     res.set({ "Access-Control-Allow-Origin": "*" });
     res.set({ "Access-Control-Allow-Methods": "GET,POST,PATCH,DELETE" });
     res.set({ "Access-Control-Allow-Headers": "Content-Type" });
@@ -42,6 +51,9 @@ const setupServer = () => {
   app.post("/tasks", tasksController.post);
   app.patch("/tasks/:id", validateId, tasksController.patch);
   app.delete("/tasks/:id", validateId, tasksController.delete);
+
+  app.get("/books", booksController.get);
+
   return app;
 };
 
