@@ -17,8 +17,8 @@ module.exports = {
   },
 
   /**
-   * @param {number} id - The customer's id.
-   * @return {Promise<Object>} A promise that resolves to the customer that matches the id.
+   * @param {number} id - The task's id.
+   * @return {Promise<Object>} A promise that resolves to the task that matches the id.
    */
   getById(id) {
     return knex
@@ -34,7 +34,9 @@ module.exports = {
    */
   create(task) {
     validateRequired(validateProps(task));
-    return knex(TASKS_TABLE).insert(task);
+    return knex(TASKS_TABLE)
+      .insert(task)
+      .then(() => task.id);
   },
 
   /**
@@ -51,6 +53,6 @@ module.exports = {
   },
 
   delete(id) {
-    return knex.from(TASKS_TABLE).where({ id: id }).del()
-  }
+    return knex.from(TASKS_TABLE).where({ id: id }).del();
+  },
 };
