@@ -9,8 +9,11 @@ describe("tasks", () => {
   describe("getAll", () => {
     it("should return an array of tasks", async () => {
       const tasks = await tasksModel.getAll();
-      expect(tasks).to.be.an.instanceof(Array);
-      expect(tasks.length).to.eq(3);
+      expect(tasks).to.deep.equal([
+        { id: 1, title: "食材を買いに行く" },
+        { id: 2, title: "申請タスクAを上げる" },
+        { id: 3, title: "資源ごみを出す" },
+      ]);
     });
   });
 
@@ -19,8 +22,7 @@ describe("tasks", () => {
       const existId = 1;
       it("should get task by id", async () => {
         const task = await tasksModel.getById(existId);
-        expect(task).to.exist;
-        expect(task.id).to.eq(existId);
+        expect(task).to.deep.equal({ id: 1, title: "食材を買いに行く" });
       });
     });
 
@@ -47,12 +49,11 @@ describe("tasks", () => {
     describe("with valid properties", () => {
       it("should be able to create a new task", async () => {
         const id = await tasksModel.create({ id: newId, title: "testTitle" });
-        const task = await knex(TASKS_TABLE)
+        const checkTask = await knex(TASKS_TABLE)
           .select()
           .where("id", newId)
           .first();
-        expect(task).to.exist;
-        expect(task.id).to.eq(newId);
+        expect(checkTask.id).to.deep.equal(newId);
       });
     });
   });
@@ -87,7 +88,7 @@ describe("tasks", () => {
     });
   });
 
-  describe("create", () => {
+  describe("delete", () => {
     const deleteId = 6666;
 
     before(async () => {
